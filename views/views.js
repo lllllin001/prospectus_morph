@@ -313,6 +313,88 @@ var genderTrial = {
     trials: 1
 };
 
+// Age block instructions
+var ageBlockInstructions = {
+    name: "ageBlockInstructions",
+    render: function(CT) {
+        var viewTemplate = $("#age-block-instructions-view").html();
+
+        $("#main").html(
+            Mustache.render(viewTemplate, {})
+        );
+
+        $("#next").on('click', function () {
+            exp.findNextView();
+        });
+    },
+    trials: 1
+};
+
+// Age block trial
+var ageTrial = {
+    name: "ageTrial",
+    render: function(CT) {
+        var viewTemplate = $("#age-trial-view").html();
+        var image_path = "images/" + exp.trial_info.age_block_trials[CT]['image'];
+
+        $("#main").html(
+            Mustache.render(viewTemplate, {
+                image: image_path
+            })
+        );
+
+        window.scrollTo(0,0);
+        var startingTime = Date.now();
+
+        // Function to validate and submit age
+        var submitAge = function() {
+            var ageInput = $("#age-input");
+            var age = ageInput.val().trim();
+            
+            // Validate the input
+            if (age === "" || isNaN(age) || parseInt(age) < 0 || parseInt(age) > 120) {
+                $("#error").css({"display": "block"});
+                return;
+            }
+            
+            // Valid input - record data
+            var rt_complete = Date.now();
+            var trial_data = {
+                trial_number: CT + 1,
+                block: "age",
+                image: exp.trial_info.age_block_trials[CT]['image'],
+                response: parseInt(age),
+                rt: (rt_complete - startingTime) / 1000
+            };
+
+            exp.trial_data.push(trial_data);
+            exp.findNextView();
+        };
+
+        // Listen for Enter key
+        $("#age-input").on('keypress', function(e) {
+            if (e.key === 'Enter' || e.keyCode === 13) {
+                e.preventDefault();
+                submitAge();
+            }
+        });
+
+        // Listen for button click
+        $("#next").on('click', function() {
+            submitAge();
+        });
+
+        // Hide error message when user starts typing
+        $("#age-input").on('input', function() {
+            $("#error").css({"display": "none"});
+        });
+
+        // Auto-focus the input field
+        $("#age-input").focus();
+    },
+    trials: 1
+};
+
 // AI block instructions
 var aiBlockInstructions = {
     name: "aiBlockInstructions",

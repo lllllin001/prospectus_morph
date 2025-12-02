@@ -6,7 +6,7 @@ var config_deploy = {
     // you receive the experimentID when you create the experiment using the _babe server app
     // "experimentID": "100",
     // // if you use the _babe server app, specify its URL here
-    "experimentID": "age-sex-race.json",
+    "experimentID": "updated_age-sex-race.json",
     "serverAppURL": "https://physicalattribute-default-rtdb.firebaseio.com/",
 
     // set deployment method; use one of:
@@ -14,7 +14,7 @@ var config_deploy = {
     // 'MTurkSandbox', 'Prolific', 'directLink'
     // "deployMethod": "debug",
     //"deployMethod": "directLink",
-     "deployMethod": "Prolific",
+    "deployMethod": "Prolific",
     // "deployMethod": "MTurk",
     // "deployMethod": "MTurkSandbox",
 

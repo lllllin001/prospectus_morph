@@ -1,5 +1,12 @@
+// Test set with just a few images for quick testing
+var test_images = [
+    "FAsian_Y_18.jpg",
+    "MBlack_M_41.png",
+    "FWhite_M_40.png"
+];
+
 // List of all image files in the images folder (144 total)
-var all_images = [
+var all_images_full = [
     "FAsian_M_1_AI.png",
     "FAsian_M_2_AI.png",
     "FAsian_M_3_AI.png",
@@ -145,3 +152,8 @@ var all_images = [
     "MWhite_Y_37.png",
     "MWhite_Y_38.png"
 ];
+
+// Switch between test and full image sets
+// Set USE_TEST_SET to true for quick testing, false for full experiment
+var USE_TEST_SET = false;
+var all_images = USE_TEST_SET ? test_images : all_images_full;

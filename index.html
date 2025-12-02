@@ -212,6 +212,45 @@
             </div>
         </script>
 
+        <!-- Age block instruction view -->
+        <script id="age-block-instructions-view" type="text/html">
+            <div class="view">
+                <h1>Age Judgment Task</h1>
+                <br>
+                <section class="text-container">
+                    <p class="text">
+                        In this section, you will see a series of photos. For each photo, you will be asked:<br><br>
+                        
+                        <strong>"How old does this person look to you?"</strong><br><br>
+                        
+                        Please enter a number (in years) in the textbox that appears below each image.<br><br>
+                        
+                        After entering your answer, press the <strong>Enter</strong> key or click the <strong>Continue</strong> button to proceed.<br><br>
+                        
+                        Click below to begin.
+                    </p>
+                </section>
+                <br>
+                <button id="next">Begin</button>
+            </div>
+        </script>
+
+        <!-- Age block trial view -->
+        <script id="age-trial-view" type="text/html">
+            <div class="view">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <img src="{{ image }}" alt="Person" style="max-width: 400px; max-height: 400px; border: 1px solid #ccc;">
+                </div>
+                <div style="text-align: center;">
+                    <p class="question" style="font-size: 20px; margin-bottom: 20px;">How old does this person look to you? Please enter a number (in years).</p>
+                    <input type="number" id="age-input" min="0" max="120" style="font-size: 18px; padding: 10px; width: 150px; text-align: center;" placeholder="Age">
+                    <br><br>
+                    <button id="next" style="font-size: 16px; padding: 10px 20px;">Continue</button>
+                    <p id="error" class="help-text" style="display: none; color: red; margin-top: 10px;">Please enter a valid age.</p>
+                </div>
+            </div>
+        </script>
+
         <!-- AI block instruction view -->
         <script id="ai-block-instructions-view" type="text/html">
             <div class="view">
