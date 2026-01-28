@@ -5,7 +5,7 @@ exp.customize = function() {
     this.global_data.startTime = Date.now();
     
     // Shuffle all images and use them for all three blocks (same order for all blocks)
-    const shuffled_images = _.shuffle(all_images);
+    const shuffled_images = _.shuffle(all_images); // Limit to 5 images for testing
     
     // Create trial data arrays for each block (all use the same shuffled image list)
     const sex_block_trials = shuffled_images.map(function(image) {
@@ -20,14 +20,14 @@ exp.customize = function() {
         return { image: image };
     });
     
-    const ai_block_trials = shuffled_images.map(function(image) {
-        return { image: image };
-    });
+    // const ai_block_trials = shuffled_images.map(function(image) {
+    //     return { image: image };
+    // });
     
     this.trial_info.sex_block_trials = sex_block_trials;
     this.trial_info.gender_block_trials = gender_block_trials;
     this.trial_info.age_block_trials = age_block_trials;
-    this.trial_info.ai_block_trials = ai_block_trials;
+    // this.trial_info.ai_block_trials = ai_block_trials;
     
     // Randomize the order of sex and gender blocks (0 = sex first, 1 = gender first)
     const blockOrder = Math.random() < 0.5 ? 'sex_first' : 'gender_first';
@@ -81,17 +81,17 @@ exp.customize = function() {
         this.views_seq.push(ageTrial);
     }
     
-    // AI block always comes last
-    this.views_seq.push(aiBlockInstructions);
-    for (let i = 0; i < ai_block_trials.length; i++) {
-        this.views_seq.push(aiTrial);
-    }
+    // AI block always comes last (COMMENTED OUT)
+    // this.views_seq.push(aiBlockInstructions);
+    // for (let i = 0; i < ai_block_trials.length; i++) {
+    //     this.views_seq.push(aiTrial);
+    // }
     
     this.views_seq.push(postTest);
     this.views_seq.push(thanks);
 
     // adds progress bars to the views listed
-    this.progress_bar_in = ["sexTrial", "genderTrial", "ageTrial", "aiTrial"];
+    this.progress_bar_in = ["sexTrial", "genderTrial", "ageTrial"]; // removed aiTrial
     // styles: chunks, separate or default
     this.progress_bar_style = "default";
     // the width of the progress bar or a single chunk

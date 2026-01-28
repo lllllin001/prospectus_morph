@@ -24,7 +24,7 @@ Lin Lin & Kerri L. Johnson from the Department of Communication at the Universit
 You are being asked to participate in this study because the researcher wants to understand how people describe others and make judgments.<br><br>
 
 <strong>HOW LONG WILL THE RESEARCH LAST AND WHAT WILL I NEED TO DO?</strong><br>
-Participation will take a total of about 30 minutes. If you volunteer to participate in this study, the researcher will ask you to do the following:<br>
+Participation will take a total of about <strong>30</strong> minutes. If you volunteer to participate in this study, the researcher will ask you to do the following:<br>
 \u25CF Provide judgments of a variety of faces.<br>
 \u25CF Complete questionnaires about your background.<br><br>
 
@@ -58,7 +58,7 @@ Any data that might carry a risk of potential de-anonymization will be destroyed
 Your data, including de-identified data, may be kept for use in future research.<br><br>
 
 <strong>WILL I BE PAID FOR MY PARTICIPATION?</strong><br>
-You will receive $5 for your participation in this study.<br><br>
+You will receive $6 for your participation in this study.<br><br>
 
 <strong>UCLA Office of the Human Research Protection Program (OHRPP):</strong><br>
 If you have questions about your rights as a research subject, or you have concerns or suggestions and you want to talk to someone other than the researchers, you may contact the UCLA OHRPP by phone: (310) 206-2040; by email: <a href='mailto:participants@research.ucla.edu'>participants@research.ucla.edu</a> or by mail: Box 951406, Los Angeles, CA 90095-1406.<br><br>
@@ -131,7 +131,7 @@ var instructions = {
         );
 
         var next_button = $("#next");
-        var timeLeft = 30;
+        var timeLeft =45;
         
         // Countdown timer
         var timerInterval = setInterval(function() {
@@ -346,101 +346,19 @@ var ageTrial = {
         window.scrollTo(0,0);
         var startingTime = Date.now();
 
-        // Function to validate and submit age
-        var submitAge = function() {
-            var ageInput = $("#age-input");
-            var age = ageInput.val().trim();
-            
-            // Validate the input
-            if (age === "" || isNaN(age) || parseInt(age) < 0 || parseInt(age) > 120) {
-                $("#error").css({"display": "block"});
-                return;
-            }
-            
-            // Valid input - record data
-            var rt_complete = Date.now();
-            var trial_data = {
-                trial_number: CT + 1,
-                block: "age",
-                image: exp.trial_info.age_block_trials[CT]['image'],
-                response: parseInt(age),
-                rt: (rt_complete - startingTime) / 1000
-            };
-
-            exp.trial_data.push(trial_data);
-            exp.findNextView();
-        };
-
-        // Listen for Enter key
-        $("#age-input").on('keypress', function(e) {
-            if (e.key === 'Enter' || e.keyCode === 13) {
-                e.preventDefault();
-                submitAge();
-            }
-        });
-
-        // Listen for button click
-        $("#next").on('click', function() {
-            submitAge();
-        });
-
-        // Hide error message when user starts typing
-        $("#age-input").on('input', function() {
-            $("#error").css({"display": "none"});
-        });
-
-        // Auto-focus the input field
-        $("#age-input").focus();
-    },
-    trials: 1
-};
-
-// AI block instructions
-var aiBlockInstructions = {
-    name: "aiBlockInstructions",
-    render: function(CT) {
-        var viewTemplate = $("#ai-block-instructions-view").html();
-
-        $("#main").html(
-            Mustache.render(viewTemplate, {})
-        );
-
-        $("#next").on('click', function () {
-            exp.findNextView();
-        });
-    },
-    trials: 1
-};
-
-// AI block trial
-var aiTrial = {
-    name: "aiTrial",
-    render: function(CT) {
-        var viewTemplate = $("#ai-trial-view").html();
-        var image_path = "images/" + exp.trial_info.ai_block_trials[CT]['image'];
-
-        $("#main").html(
-            Mustache.render(viewTemplate, {
-                image: image_path
-            })
-        );
-
-        window.scrollTo(0,0);
-        var startingTime = Date.now();
-
-        // Listen for keyboard input (1 or 2)
+        // Listen for keyboard input (Y or O)
         var keyHandler = function(e) {
-            var key = e.key;
-            if (key === '1' || key === '2') {
+            var key = e.key.toLowerCase();
+            if (key === 'y' || key === 'o') {
                 $(document).off('keydown', keyHandler);
                 
                 var rt_complete = Date.now();
                 var trial_data = {
                     trial_number: CT + 1,
-                    block: "ai_judgment",
-                    image: exp.trial_info.ai_block_trials[CT]['image'],
-                    response: key === '1' ? 'AI-generated' : 'Camera-captured',
-                    response_key: key,
+                    block: "age",
+                    image: exp.trial_info.age_block_trials[CT]['image'],
+                    response: key === 'y' ? 'Young' : 'Old',
+                    response_key: key.toUpperCase(),
                     rt: (rt_complete - startingTime) / 1000
                 };
 
@@ -453,6 +371,65 @@ var aiTrial = {
     },
     trials: 1
 };
+
+// AI block instructions (COMMENTED OUT)
+// var aiBlockInstructions = {
+//     name: "aiBlockInstructions",
+//     render: function(CT) {
+//         var viewTemplate = $("#ai-block-instructions-view").html();
+
+//         $("#main").html(
+//             Mustache.render(viewTemplate, {})
+//         );
+
+//         $("#next").on('click', function () {
+//             exp.findNextView();
+//         });
+//     },
+//     trials: 1
+// };
+
+// // AI block trial
+// var aiTrial = {
+//     name: "aiTrial",
+//     render: function(CT) {
+//         var viewTemplate = $("#ai-trial-view").html();
+//         var image_path = "images/" + exp.trial_info.ai_block_trials[CT]['image'];
+
+//         $("#main").html(
+//             Mustache.render(viewTemplate, {
+//                 image: image_path
+//             })
+//         );
+
+//         window.scrollTo(0,0);
+//         var startingTime = Date.now();
+
+//         // Listen for keyboard input (1 or 2)
+//         var keyHandler = function(e) {
+//             var key = e.key;
+//             if (key === '1' || key === '2') {
+//                 $(document).off('keydown', keyHandler);
+//                 
+//                 var rt_complete = Date.now();
+//                 var trial_data = {
+//                     trial_number: CT + 1,
+//                     block: "ai_judgment",
+//                     image: exp.trial_info.ai_block_trials[CT]['image'],
+//                     response: key === '1' ? 'AI-generated' : 'Camera-captured',
+//                     response_key: key,
+//                     rt: (rt_complete - startingTime) / 1000
+//                 };
+
+//                 exp.trial_data.push(trial_data);
+//                 exp.findNextView();
+//             }
+//         };
+
+//         $(document).on('keydown', keyHandler);
+//     },
+//     trials: 1
+// };
 
 // Stage 1: Typicality ratings for man, woman, and nonbinary person
 var stage1 = {
